@@ -1,3 +1,4 @@
+/* ------------------ BODY & PLAYER ------------------ */
 body {
   background: #0e0e0e;
   font-family: Arial, sans-serif;
@@ -28,18 +29,19 @@ body {
   margin-bottom: 10px;
 }
 
+/* ------------------ CONTROLS ------------------ */
 .controls {
   display: flex;
   justify-content: space-around;
   margin: 15px 0;
 }
 
-/* ------------------ CONTROL BUTTONS ------------------ */
+/* ------------------ ALL BUTTONS ------------------ */
 .control-btn {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #222;          /* dunkler Kreis */
+  background: #222;
   border: none;
   cursor: pointer;
   display: flex;
@@ -49,7 +51,7 @@ body {
 }
 
 .control-btn:hover {
-  background: #1db954;       /* grün beim Hover */
+  background: #1db954;
   transform: scale(1.05);
 }
 
@@ -80,10 +82,11 @@ body {
 }
 
 /* ------------------ SKIP BUTTONS ------------------ */
-.control-btn.skip-btn {
+.control-btn.prev,
+.control-btn.next {
   font-size: 26px;   /* Größe der Emoji */
   color: white;      /* Symbolfarbe */
-  line-height: 1;    /* zentriert */
+  line-height: 1;    /* vertikal zentriert */
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -96,15 +99,21 @@ body {
   transition: background 0.2s, transform 0.1s;
 }
 
-.control-btn.skip-btn:hover {
+.control-btn.prev:hover,
+.control-btn.next:hover {
   background: #1db954;
   transform: scale(1.05);
 }
 
+.control-btn.prev,
+.control-btn.next {
+  font-size: 26px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-variant-emoji: text;
+}
 
-
-
-
+/* ------------------ PLAYLIST ------------------ */
 .playlist {
   text-align: left;
   margin-top: 15px;
