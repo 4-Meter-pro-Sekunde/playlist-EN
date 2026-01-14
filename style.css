@@ -1,0 +1,122 @@
+body {
+  background: #0e0e0e;
+  font-family: Arial, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.player {
+  width: 320px;
+  background: #181818;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
+  text-align: center;
+}
+
+.cover {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
+}
+
+/* ------------------ CONTROL BUTTONS ------------------ */
+.control-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #222;          /* dunkler Kreis */
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.control-btn:hover {
+  background: #1db954;       /* grün beim Hover */
+  transform: scale(1.05);
+}
+
+/* ------------------ PLAY BUTTON ------------------ */
+.control-btn.play::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 14px solid white;       /* Dreieck weiß */
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+/* ------------------ PAUSE BUTTON ------------------ */
+.control-btn.pause::before {
+  content: "";
+  display: inline-block;
+  width: 14px;      /* Gesamtbreite für beide Balken */
+  height: 18px;
+  background: linear-gradient(
+    to right,
+    white 5px,
+    transparent 5px,
+    transparent 9px,
+    white 9px
+  ); /* zwei weiße Balken */
+}
+
+/* ------------------ SKIP BUTTONS ------------------ */
+.control-btn.skip-btn {
+  font-size: 26px;   /* Größe der Emoji */
+  color: white;      /* Symbolfarbe */
+  line-height: 1;    /* zentriert */
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.control-btn.skip-btn:hover {
+  background: #1db954;
+  transform: scale(1.05);
+}
+
+
+
+
+
+.playlist {
+  text-align: left;
+  margin-top: 15px;
+}
+
+.playlist div {
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.playlist div.active {
+  background: #333;
+  color: white;
+}
