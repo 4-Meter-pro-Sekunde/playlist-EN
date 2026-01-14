@@ -4,39 +4,177 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Playlist Player</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+/* ------------------ BODY & PLAYER ------------------ */
+body {
+  background: #0e0e0e;
+  font-family: Arial, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.player {
+  width: 320px;
+  background: #181818;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
+  text-align: center;
+}
+
+.cover {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* ------------------ CONTROLS ------------------ */
+.controls {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
+}
+
+/* ------------------ BUTTON BASE ------------------ */
+.control-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #222;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.control-btn:hover {
+  background: #1db954;
+  transform: scale(1.05);
+}
+
+/* ------------------ PLAY ------------------ */
+.control-btn.play::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 14px solid white;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+/* ------------------ PAUSE ------------------ */
+.control-btn.pause::before {
+  content: "";
+  width: 14px;
+  height: 18px;
+  background: linear-gradient(
+    to right,
+    white 5px,
+    transparent 5px,
+    transparent 9px,
+    white 9px
+  );
+}
+
+/* ------------------ PREVIOUS ------------------ */
+.control-btn.prev::before {
+  content: "";
+  width: 2px;
+  height: 18px;
+  background: white;
+  margin-right: 4px;
+}
+
+.control-btn.prev::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-right: 12px solid white;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+}
+
+/* ------------------ NEXT ------------------ */
+.control-btn.next::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 12px solid white;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  margin-right: 4px;
+}
+
+.control-btn.next::after {
+  content: "";
+  width: 2px;
+  height: 18px;
+  background: white;
+}
+
+/* ------------------ PLAYLIST ------------------ */
+.playlist {
+  text-align: left;
+  margin-top: 15px;
+}
+
+.playlist div {
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.playlist div.active {
+  background: #333;
+  color: white;
+}
+</style>
 </head>
+
 <body>
 
 <div class="player">
   <img id="cover" class="cover" src="cover1.jpg" alt="Cover">
-  <div id="title" class="title">Song 1</div>
+  <div id="title" class="title">Track 1</div>
+
   <audio id="audio"></audio>
 
   <div class="controls">
-  <button class="control-btn prev" onclick="prev()">⏮</button>
-  <button class="control-btn play" id="playBtn" onclick="togglePlay()"></button>
-  <button class="control-btn next" onclick="next()">⏭</button>
-</div>
+    <button class="control-btn prev" onclick="prev()"></button>
+    <button class="control-btn play" id="playBtn" onclick="togglePlay()"></button>
+    <button class="control-btn next" onclick="next()"></button>
+  </div>
 
   <div class="playlist" id="playlist"></div>
 </div>
 
 <script>
 const tracks = [
-  { title: "Track 1 - EN", file: "01 Track 1_de.mp3", cover: "cover1.jpeg" },
-  { title: "Track 2 - EN", file: "01 Track 1_de.mp3", cover: "cover1.jpeg" },
-  { title: "Track 3 - EN", file: "01 Track 1_de.mp3", cover: "cover1.jpeg" }
+  { title: "Track 1", file: "01 Track 1_de.mp3", cover: "cover1.jpg" },
+  { title: "Track 2", file: "01 Track 1_de.mp3", cover: "cover1.jpg" },
+  { title: "Track 3", file: "01 Track 1_de.mp3", cover: "cover1.jpg" }
 ];
 
 let current = 0;
+
 const audio = document.getElementById("audio");
 const cover = document.getElementById("cover");
 const title = document.getElementById("title");
 const playlistDiv = document.getElementById("playlist");
 const playBtn = document.getElementById("playBtn");
 
-/* Funktionen */
+/* ----------- FUNCTIONS ----------- */
 function loadTrack(index) {
   current = index;
   audio.src = tracks[index].file;
@@ -46,8 +184,7 @@ function loadTrack(index) {
 }
 
 function togglePlay() {
-  if (audio.paused) audio.play();
-  else audio.pause();
+  audio.paused ? audio.play() : audio.pause();
 }
 
 function next() {
@@ -68,12 +205,15 @@ function updatePlaylist() {
     const div = document.createElement("div");
     div.textContent = track.title;
     if (index === current) div.classList.add("active");
-    div.onclick = () => { loadTrack(index); audio.play(); };
+    div.onclick = () => {
+      loadTrack(index);
+      audio.play();
+    };
     playlistDiv.appendChild(div);
   });
 }
 
-/* Play/Pause Button */
+/* ----------- BUTTON STATE ----------- */
 audio.addEventListener("play", () => {
   playBtn.classList.remove("play");
   playBtn.classList.add("pause");
@@ -84,10 +224,9 @@ audio.addEventListener("pause", () => {
   playBtn.classList.add("play");
 });
 
-/* Song Ende */
 audio.addEventListener("ended", next);
 
-/* Initial */
+/* ----------- INIT ----------- */
 loadTrack(0);
 playBtn.classList.add("play");
 </script>
